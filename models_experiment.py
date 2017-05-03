@@ -1287,76 +1287,84 @@ model.compile(loss='categorical_crossentropy', optimizer='adam',metrics=['accura
 history_object = model.fit(samples_scaled, one_hot_labels,                            validation_data=(samples_scaled_validation, one_hot_labels_validation),                            nb_epoch=epochs, batch_size=batch_size, verbose=2)
 history_plot(history_object,'CNNbig1_ELU_BNyes_DROPall0.25_10k.png')
 
-# CNNdeep_ELU_BNyes_DROPall0.25_10k
-epochs = 10000
-batch_size = 4096
-rate = 0.25
-rate_last = 0.25
-model = Sequential()
-# 10*5*5
-model.add(Convolution2D(16, 3, 3,input_shape=(10, 5, 9),border_mode='valid'))
-model.add(BatchNormalization())
-#model.add(Activation('relu'))
-model.add(ELU())
-model.add(Dropout(rate))
-# 8*3*16
-model.add(Convolution2D(32, 3, 3,border_mode='valid'))
-model.add(BatchNormalization())
-#model.add(Activation('relu'))
-model.add(ELU())
-model.add(Dropout(rate))
-# 6*1*32
-model.add(Flatten())
-# 192
-model.add(Dense(64))
-model.add(BatchNormalization())
-#model.add(Activation('relu'))
-model.add(ELU())
-model.add(Dropout(rate_last))
-model.add(Dense(64))
-model.add(BatchNormalization())
-#model.add(Activation('relu'))
-model.add(ELU())
-model.add(Dropout(rate_last))
-model.add(Dense(2))
-model.add(Activation('softmax'))
-model.compile(loss='categorical_crossentropy', optimizer='adam',metrics=['accuracy'])
-history_object = model.fit(samples_scaled, one_hot_labels,                            validation_data=(samples_scaled_validation, one_hot_labels_validation),                            nb_epoch=epochs, batch_size=batch_size, verbose=2)
-history_plot(history_object,'CNNdeep_ELU_BNyes_DROPall0.25_10k.png')
+from keras.models import load_model
+model.save('model_full.h5')
+json_string = model.to_json()
+model.save_weights('model_weights.h5')
+text_file = open("model_structure.txt", "w")
+text_file.write(json_string)
+text_file.close()
 
-# CNNbigdeep_ELU_BNyes_DROPall0.1_10k
-epochs = 10000
-batch_size = 4096
-rate = 0.25
-rate_last = 0.25
-model = Sequential()
-# 10*5*5
-model.add(Convolution2D(32, 3, 3,input_shape=(10, 5, 9),border_mode='valid'))
-model.add(BatchNormalization())
-#model.add(Activation('relu'))
-model.add(ELU())
-model.add(Dropout(rate))
-# 8*3*16
-model.add(Convolution2D(64, 3, 3,border_mode='valid'))
-model.add(BatchNormalization())
-#model.add(Activation('relu'))
-model.add(ELU())
-model.add(Dropout(rate))
-# 6*1*32
-model.add(Flatten())
-# 192
-model.add(Dense(64))
-model.add(BatchNormalization())
-#model.add(Activation('relu'))
-model.add(ELU())
-model.add(Dropout(rate_last))
-model.add(Dense(64))
-model.add(BatchNormalization())
-#model.add(Activation('relu'))
-model.add(ELU())
-model.add(Dropout(rate_last))
-model.add(Dense(2))
-model.add(Activation('softmax'))
-model.compile(loss='categorical_crossentropy', optimizer='adam',metrics=['accuracy'])
-history_object = model.fit(samples_scaled, one_hot_labels,                            validation_data=(samples_scaled_validation, one_hot_labels_validation),                            nb_epoch=epochs, batch_size=batch_size, verbose=2)
-history_plot(history_object,'CNNbigdeep_ELU_BNyes_DROPall0.25_10k.png')
+## CNNdeep_ELU_BNyes_DROPall0.25_10k
+#epochs = 10000
+#batch_size = 4096
+#rate = 0.25
+#rate_last = 0.25
+#model = Sequential()
+## 10*5*5
+#model.add(Convolution2D(16, 3, 3,input_shape=(10, 5, 9),border_mode='valid'))
+#model.add(BatchNormalization())
+##model.add(Activation('relu'))
+#model.add(ELU())
+#model.add(Dropout(rate))
+## 8*3*16
+#model.add(Convolution2D(32, 3, 3,border_mode='valid'))
+#model.add(BatchNormalization())
+##model.add(Activation('relu'))
+#model.add(ELU())
+#model.add(Dropout(rate))
+## 6*1*32
+#model.add(Flatten())
+## 192
+#model.add(Dense(64))
+#model.add(BatchNormalization())
+##model.add(Activation('relu'))
+#model.add(ELU())
+#model.add(Dropout(rate_last))
+#model.add(Dense(64))
+#model.add(BatchNormalization())
+##model.add(Activation('relu'))
+#model.add(ELU())
+#model.add(Dropout(rate_last))
+#model.add(Dense(2))
+#model.add(Activation('softmax'))
+#model.compile(loss='categorical_crossentropy', optimizer='adam',metrics=['accuracy'])
+#history_object = model.fit(samples_scaled, one_hot_labels,                            validation_data=(samples_scaled_validation, one_hot_labels_validation),                            nb_epoch=epochs, batch_size=batch_size, verbose=2)
+#history_plot(history_object,'CNNdeep_ELU_BNyes_DROPall0.25_10k.png')
+#
+## CNNbigdeep_ELU_BNyes_DROPall0.1_10k
+#epochs = 10000
+#batch_size = 4096
+#rate = 0.25
+#rate_last = 0.25
+#model = Sequential()
+## 10*5*5
+#model.add(Convolution2D(32, 3, 3,input_shape=(10, 5, 9),border_mode='valid'))
+#model.add(BatchNormalization())
+##model.add(Activation('relu'))
+#model.add(ELU())
+#model.add(Dropout(rate))
+## 8*3*16
+#model.add(Convolution2D(64, 3, 3,border_mode='valid'))
+#model.add(BatchNormalization())
+##model.add(Activation('relu'))
+#model.add(ELU())
+#model.add(Dropout(rate))
+## 6*1*32
+#model.add(Flatten())
+## 192
+#model.add(Dense(64))
+#model.add(BatchNormalization())
+##model.add(Activation('relu'))
+#model.add(ELU())
+#model.add(Dropout(rate_last))
+#model.add(Dense(64))
+#model.add(BatchNormalization())
+##model.add(Activation('relu'))
+#model.add(ELU())
+#model.add(Dropout(rate_last))
+#model.add(Dense(2))
+#model.add(Activation('softmax'))
+#model.compile(loss='categorical_crossentropy', optimizer='adam',metrics=['accuracy'])
+#history_object = model.fit(samples_scaled, one_hot_labels,                            validation_data=(samples_scaled_validation, one_hot_labels_validation),                            nb_epoch=epochs, batch_size=batch_size, verbose=2)
+#history_plot(history_object,'CNNbigdeep_ELU_BNyes_DROPall0.25_10k.png')
